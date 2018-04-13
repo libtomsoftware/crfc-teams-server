@@ -7,9 +7,10 @@ let core;
 if (!configExists) {
     console.error(FILE_ID, 'No .env.json file detected, booting aborted...');
 } else {
-    require('dot-env');  
+    require('dot-env');
     core = require('./core');
-    core.logger.log(FILE_ID, '.env.json file detected and loaded...');
+    logger = require('./logger');
+    logger.log(FILE_ID, '.env.json file detected and loaded...');
 }
 
 module.exports = core;

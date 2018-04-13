@@ -1,11 +1,13 @@
-const http = require('./http'),
-    logger = require('./logger'),
+const logger = require('./logger'),
+    mongodb = require('mongodb'),
+    setup = require('./setup'),
     CONFIG = require('./config'),
     FILE_ID = 'core';
 
 module.exports = new class Core {
     constructor() {
         this.startServer();
+        this.setupMongoDb();
     }
 
     startServer() {
@@ -13,19 +15,7 @@ module.exports = new class Core {
         require('./http-server').boot();
     }
 
-    get api() {
-        return require('./api');
-    }
-
-    get config() {
-        return require('./config');
-    }
-
-    get http() {
-        return http;
-    }
-
-    get logger() {
-        return logger;
+    setupMongoDb() {
+        setup.init(mongodb);
     }
 };

@@ -29,6 +29,7 @@
     "express": "*",
     "fs-extra": "*",
     "moment": "*",
+    "mongodb": "^3.0.6",
     "request": "*"
   }
 }

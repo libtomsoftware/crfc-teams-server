@@ -6,7 +6,7 @@ const responder = require('./common/responder'),
     ],
     FILE_ID = 'api';
 
-    module.exports = new class Api {
+module.exports = new class Api {
     constructor() {
         this.responder = responder;
         this.parser = parser;
