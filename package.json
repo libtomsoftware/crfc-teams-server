@@ -1,0 +1,34 @@
+{
+  "name": "footy-assistant-server",
+  "version": "0.0.1",
+  "description": "Footy Assistant Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libtomsoftware/footy-assistant-server.git"
+  },
+  "keywords": [
+    "cryptocurrencies",
+    "exchange",
+    "bitcoin",
+    "ethereum"
+  ],
+  "author": "Libtom Software Ltd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/libtomsoftware/footy-assistant-serverissues"
+  },
+  "homepage": "https://github.com/libtomsoftware/footy-assistant-server#readme",
+  "dependencies": {
+    "body-parser": "*",
+    "chalk": "*",
+    "dot-env": "*",
+    "express": "*",
+    "fs-extra": "*",
+    "moment": "*",
+    "request": "*"
+  }
+}
