@@ -3,6 +3,7 @@ const CONFIG = require('../config'),
     FILE_ID = 'setup',
     ENV = process.env,
     dbAddress = ENV.MONGODB_ADDRESS,
+    dbName = ENV.MONGODB_NAME,
     dbUser = ENV.MONGODB_USER,
     dbPassword = ENV.MONGODB_PASSWORD;
 
@@ -18,8 +19,9 @@ module.exports = new class MongodBSetup {
 
     setupDbDetails(mongodb) {
         CONFIG.DB = Object.assign({}, CONFIG.DB, {
+            NAME: dbName,
             CLIENT: mongodb.MongoClient,
-            URL: `mongodb://${dbUser}:${dbPassword}@${dbAddress}`
+            URL: `mongodb://${dbUser}:${dbPassword}@${dbAddress}/${dbName}`
         });
     }
 
