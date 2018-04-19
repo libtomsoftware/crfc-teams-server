@@ -1,4 +1,4 @@
-const CONFIG = require('../../config'),
+const CONFIG = require('../../core/config'),
     STATUS_CODE = CONFIG.CONSTANTS.HTTP_CODE;
 
 module.exports = new class Responder {

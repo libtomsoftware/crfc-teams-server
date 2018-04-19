@@ -1,5 +1,4 @@
-const api = require('../api'),
-    CONFIG = require('../config'),
+const CONFIG = require('../config'),
     logger = require('../logger'),
     FILE_ID = 'setup',
     ENV = process.env,
@@ -22,8 +21,6 @@ module.exports = new class MongodBSetup {
             CLIENT: mongodb.MongoClient,
             URL: `mongodb://${dbUser}:${dbPassword}@${dbAddress}`
         });
-
-        console.log('CONFIG.DB', CONFIG.DB.URL)
     }
 
     hasAllDbParams() {

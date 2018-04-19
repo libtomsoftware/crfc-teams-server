@@ -1,8 +1,9 @@
 const responder = require('./common/responder'),
     parser = require('./common/parser'),
-    logger = require('../logger'),
+    logger = require('../core/logger'),
     endpoints = [
-        'healthcheck'
+        'healthcheck',
+        'players'
     ],
     FILE_ID = 'api';
 
@@ -16,15 +17,7 @@ module.exports = new class Api {
             this.resources[endpoint] = require('./resources/' + endpoint);
         });
 
-        this.extend = this.extend.bind(this);
         this.handle = this.handle.bind(this);
-    }
-
-    extend(endpoint, resource) {
-        if (!this.resources[endpoint]) {
-            logger.log(FILE_ID, `Extending API with ${endpoint}`);
-            this.resources[endpoint] = resource;
-        }
     }
 
     handle(request, response) {

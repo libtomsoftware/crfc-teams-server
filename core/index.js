@@ -1,6 +1,6 @@
 const logger = require('./logger'),
     mongodb = require('mongodb'),
-    setup = require('./setup'),
+    dbSetup = require('./db/setup'),
     CONFIG = require('./config'),
     FILE_ID = 'core';
 
@@ -16,6 +16,6 @@ module.exports = new class Core {
     }
 
     setupMongoDb() {
-        setup.init(mongodb);
+        dbSetup.init(mongodb);
     }
 };

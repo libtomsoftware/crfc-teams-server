@@ -8,8 +8,7 @@ const ENV = process.env, //eslint-disable-line one-var
             HTTP_PORT: APP_HTTP_PORT,
             URL: APP_URL
         },
-        NAME: PACKAGE_CONFIG.name,
-        TYPE: ENV.APP_TYPE || 'service'
+        NAME: PACKAGE_CONFIG.name
     };
 
 module.exports = {

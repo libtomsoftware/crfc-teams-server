@@ -4,7 +4,7 @@ const http = require('http'),
     app = express(),
     middlewares = require('../middlewares'),
     logger = require('../logger'),
-    api = require('../api'),
+    api = require('../../api'),
     CONFIG = require('../config'),
     FILE_ID = 'http-server';
 
@@ -19,9 +19,15 @@ module.exports = new class HttpServer {
             extended: false
         }));
 
-        app.all('/api/:resource/:id', api.handle);
-        app.all('/api/:resource', api.handle);
+        const routes = [
+            '/api/:resource/:id',
+            '/api/:resource'
+        ];
 
+        routes.forEach(route => {
+            app.all(route, api.handle);
+        });
+        
         app.use(middlewares.handlerFor404);
 
         server.listen(port, () => {
