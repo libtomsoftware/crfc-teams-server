@@ -1,2 +1,2 @@
 # footy-assistant-server
-Footy Assistant NodeJS Server
+Footy Assistant Server based on Libtom Software Core NodeJS Server

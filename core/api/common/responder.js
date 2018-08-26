@@ -1,13 +1,13 @@
-const CONFIG = require('../../core/config'),
+const CONFIG = require('../../config'),
     STATUS_CODE = CONFIG.CONSTANTS.HTTP_CODE;
 
 module.exports = new class Responder {
 
     constructor() {
         this.badRequestParams = {
-            'status': STATUS_CODE.BAD_REQUEST,
-            'error': 'Bad request',
-            'type': 'text/plain'
+            status: STATUS_CODE.BAD_REQUEST,
+            error: 'Bad request',
+            type: 'text/plain'
         };
 
         this.badGatewayParams = {
@@ -15,10 +15,16 @@ module.exports = new class Responder {
             error: 'bad gateway'
         };
 
+        this.conflictParams = {
+            status: STATUS_CODE.CONFLICT,
+            error: 'Entry exists',
+            type: 'text/plain'
+        };
+
         this.unauthorizedRequestParams = {
-            'status': STATUS_CODE.UNAUTHORIZED,
-            'error': 'Unauthorized',
-            'type': 'text/plain'
+            status: STATUS_CODE.UNAUTHORIZED,
+            error: 'Unauthorized',
+            type: 'text/plain'
         };
 
         this.notFoundParams = {
@@ -30,6 +36,13 @@ module.exports = new class Responder {
     send(response, params) {
         if (response) {
             if (params.status >= STATUS_CODE.OK && params.status < 300) {
+                if (params.cookie && params.cookie.name) {
+                    const cookie = params.cookie;
+                    response.cookie(cookie.name, cookie.value, {
+                        expires: cookie.expires || new Date(Date.now() + 3600000), // 1 hour
+                        httpOnly: cookie.httpOnly || false
+                    });
+                }
                 if (params.data) {
                     response.json(params.data);
                 } else {
@@ -41,6 +54,8 @@ module.exports = new class Responder {
                 });
                 if (params.message || (params.data && params.data.message)) {
                     response.end(params.message || params.data.message);
+                } else if (params.error) {
+                    response.end(params.error);
                 } else {
                     response.end();
                 }
@@ -58,6 +73,10 @@ module.exports = new class Responder {
 
     rejectBadGateway(response) {
         this.send(response, this.badGatewayParams);
+    }
+
+    rejectConflict(response) {
+        this.send(response, this.conflictParams);
     }
 
     rejectUnauthorized(response) {

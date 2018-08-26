@@ -1,5 +1,5 @@
-const CONFIG = require('../config'),
-    logger = require('../logger'),
+const logger = require('../../logger'),
+    CONFIG = require('../../config'),
     FILE_ID = 'setup',
     ENV = process.env,
     dbAddress = ENV.MONGODB_ADDRESS,
@@ -7,7 +7,7 @@ const CONFIG = require('../config'),
     dbUser = ENV.MONGODB_USER,
     dbPassword = ENV.MONGODB_PASSWORD;
 
-module.exports = new class MongodBSetup {
+module.exports = new class dBSetup {
     init(mongodb) {
         if (this.hasAllDbParams()) {
             this.setupDbDetails(mongodb);
@@ -19,14 +19,15 @@ module.exports = new class MongodBSetup {
 
     setupDbDetails(mongodb) {
         CONFIG.DB = Object.assign({}, CONFIG.DB, {
-            NAME: dbName,
             CLIENT: mongodb.MongoClient,
-            URL: `mongodb://${dbUser}:${dbPassword}@${dbAddress}/${dbName}`
+            URL: `mongodb://${dbUser}:${dbPassword}@${dbAddress}`,
+            NAME: dbName
         });
     }
 
     hasAllDbParams() {
         return [
+            dbName,
             dbAddress,
             dbUser,
             dbPassword
@@ -35,7 +36,10 @@ module.exports = new class MongodBSetup {
 
     testDbConnection() {
         logger.log(FILE_ID, 'Attempting to establish connection with db ...');
-        CONFIG.DB.CLIENT.connect(CONFIG.DB.URL, (error, db) => {
+
+        CONFIG.DB.CLIENT.connect(`${CONFIG.DB.URL}/${CONFIG.DB.NAME}`, {
+            useNewUrlParser: true
+        }, (error, db) => {
             if (error) {
                 logger.error(FILE_ID, `Database connection error: ${error}`);
                 return;

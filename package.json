@@ -8,28 +8,28 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/libtomsoftware/footy-assistant-server.git"
+    "url": "git+https://github.com/libtomsoftware/footy-assistant-app.git"
   },
   "keywords": [
-    "cryptocurrencies",
-    "exchange",
-    "bitcoin",
-    "ethereum"
+    "football",
+    "assistant",
+    "app"
   ],
   "author": "Libtom Software Ltd",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/libtomsoftware/footy-assistant-serverissues"
+    "url": "https://github.com/libtomsoftware/footy-assistant-app/issues"
   },
-  "homepage": "https://github.com/libtomsoftware/footy-assistant-server#readme",
+  "homepage": "https://github.com/libtomsoftware/footy-assistant-app#readme",
   "dependencies": {
     "body-parser": "*",
     "chalk": "*",
+    "cookie-parser": "^1.4.3",
     "dot-env": "*",
     "express": "*",
     "fs-extra": "*",
     "moment": "*",
-    "mongodb": "^3.0.6",
+    "mongodb": "^3.1.1",
     "request": "*"
   }
 }

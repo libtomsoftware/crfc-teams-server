@@ -1,6 +1,6 @@
 const moment = require('moment'),
     responder = require('../../common/responder'),
-    CONFIG = require('../../../core/config');
+    CONFIG = require('../../../config');
 
 module.exports = new class HealthcheckResource {
 

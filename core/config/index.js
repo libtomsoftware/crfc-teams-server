@@ -8,13 +8,15 @@ const ENV = process.env, //eslint-disable-line one-var
             HTTP_PORT: APP_HTTP_PORT,
             URL: APP_URL
         },
-        NAME: PACKAGE_CONFIG.name
+        NAME: PACKAGE_CONFIG.name,
+        TYPE: ENV.APP_TYPE || 'service'
     };
 
 module.exports = {
     APP: Object.assign({}, APP, {
         ID: ENV.APP_ID || `${PACKAGE_CONFIG.name}@${APP.ADDRESS.URL}:${APP.ADDRESS.HTTP_PORT}`
     }),
+    DB: {},
     CONSTANTS: {
         HTTP_CODE: {
             OK: 200,

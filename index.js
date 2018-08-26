@@ -5,12 +5,11 @@ const fs = require('fs-extra'),
 if (!configExists) {
     console.error(FILE_ID, 'No .env.json file detected, booting aborted...');
 } else {
+    const logger = require('./core/logger');
+
     require('dot-env');
-    require('./core/');
-    require('./api/');
-
-    let logger = require('./core/logger');
     logger.log(FILE_ID, '.env.json file detected and loaded...');
-}
 
-module.exports = this;
+    require('./core/db');
+    require('./core/http-server').boot();
+}
