@@ -28,10 +28,20 @@ function getManagers(values, accounts) {
     const manager = accounts.find(group => group._id === values[0]);
     const manager2 = accounts.find(group => group._id === values[1]);
 
-    let result = manager ? `${manager.firstname} ${manager.surname}` : '';
+    const result = {};
+
+    if (manager) {
+        result.manager = {
+            name: `${manager.firstname} ${manager.surname}`,
+            email: manager.username
+        }
+    };
 
     if (manager2) {
-        result += `, ${manager2.firstname} ${manager2.surname}`;
+        result.coach = {
+            name: `${manager2.firstname} ${manager2.surname}`,
+            email: manager2.username
+        }
     }
 
     return result;
