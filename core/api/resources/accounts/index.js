@@ -6,43 +6,43 @@ const dbSave = require('../../../db/operations/save');
 const dbDelete = require('../../../db/operations/delete');
 const CONFIG = require('../../../config');
 
-function onManagersRetrieve(error, result, response) {
+function onAccountsRetrieve(error, result, response) {
     if (error) {
-      logger.error(FILE_ID, `Error while retrieving managers: ${error}`);
+      logger.error(FILE_ID, `Error while retrieving accounts: ${error}`);
       responder.rejectBadGateway(response);
       return;
     };
 
-    let managers = result.map(manager => {
-        const parsed = Object.assign({}, manager);
+    let accounts = result.map(account => {
+        const parsed = Object.assign({}, account);
 
         delete parsed.password;
 
         return parsed;
     });
 
-    managers = managers.filter(manager => {
-        return manager.surname !== 'Libich';
+    accounts = accounts.filter(account => {
+        return account.surname !== 'Libich';
     });
 
     responder.send(response, {
         status: CONFIG.CONSTANTS.HTTP_CODE.OK,
         data: {
-            managers
+            accounts
         }
     });
 }
 
-function retrieveManagers(request, response) {
-    dbFind('managers', null, (error, result) => {
-        onManagersRetrieve(error, result, response);
+function retrieveAccounts(request, response) {
+    dbFind('accounts', null, (error, result) => {
+        onAccountsRetrieve(error, result, response);
     });
 }
 
-function updateManager(request, response) {
-    dbFind('managers', null, (error, result) => {
+function updateAccount(request, response) {
+    dbFind('accounts', null, (error, result) => {
         if (error) {
-            logger.error(FILE_ID, `Error while retrieving managers: ${error}`);
+            logger.error(FILE_ID, `Error while retrieving accounts: ${error}`);
             responder.rejectBadGateway(response);
             return;
         };
@@ -59,7 +59,7 @@ function updateManager(request, response) {
 
         const dataToSave = Object.assign({}, account, updateFromRequest);
 
-        dbSave('managers',
+        dbSave('accounts',
           dataToSave,
           (status) => {
               if (status === 200) {
@@ -78,14 +78,14 @@ function updateManager(request, response) {
 }
 
 function removeAccount(request, response) {
-    dbDelete('managers',
+    dbDelete('accounts',
         {
             _id: request.params.id
         },
         (promise) => {
             promise
                 .then(() => {
-                    retrieveManagers(request, response);
+                    retrieveAccounts(request, response);
                 })
                 .catch(error => {
                     responder.send(response, {
@@ -146,10 +146,10 @@ function checkIfTokenValid(request, response, onTokenValidCallback) {
         });
 }
 
-module.exports = new class ManagersResource {
+module.exports = new class AccountsResource {
 
     get(request, response) {
-        checkIfTokenValid(request, response, retrieveManagers);
+        checkIfTokenValid(request, response, retrieveAccounts);
     }
 
     post(request, response) {
@@ -158,7 +158,7 @@ module.exports = new class ManagersResource {
             return;
         }
 
-        checkIfTokenValid(request, response, updateManager);
+        checkIfTokenValid(request, response, updateAccount);
     }
 
     delete(request, response) {

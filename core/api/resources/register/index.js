@@ -9,8 +9,6 @@ const ALPHABETIC_ONLY = /^\D+/g;
 const ALPHANUMERIC_ONLY = /^[a-z0-9]+$/i;
 const VALID_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-
-
 function encrypt(text) {
   return crypto
     .createHmac('sha256', cryptoSecret)
@@ -55,7 +53,7 @@ function onAccountCheck(error, result, response, userData) {
     return;
   }
 
-  dbInsert('managers', Object.assign({}, userData, {
+  dbInsert('accounts', Object.assign({}, userData, {
     _id: helpers.generateRandomId(),
     rank: 2
   }), (status) => {
@@ -65,7 +63,7 @@ function onAccountCheck(error, result, response, userData) {
 
 function checkIfAccountExists(response, userData) {
   dbFind(
-    'managers',
+    'accounts',
     {
       username: userData.username
     },

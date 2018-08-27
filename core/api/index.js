@@ -2,12 +2,14 @@ const responder = require('./common/responder'),
     parser = require('./common/parser'),
     logger = require('../logger'),
     endpoints = [
-        'categories',
+        'accounts',
+        'agegroups',
         'healthcheck',
+        'leagues',
         'login',
         'logout',
         'register',
-        'managers'
+        'teams'
     ],
     FILE_ID = 'api';
 

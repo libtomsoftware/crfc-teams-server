@@ -106,7 +106,7 @@ function onAccountCheck(error, result, password, response) {
 
 function checkIfAccountExists(username, password, response) {
   dbFind(
-    'managers',
+    'accounts',
     {
       username
     },

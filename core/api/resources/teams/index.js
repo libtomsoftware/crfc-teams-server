@@ -8,53 +8,57 @@ const dbDelete = require('../../../db/operations/delete');
 const CONFIG = require('../../../config');
 const helpers = require('../../../helpers');
 
-function onCategoriesRetrieve(error, result, response) {
+function hasConflictConditions(item, dataFromRequest) {
+    return item.name === dataFromRequest.name && item.agegroup === dataFromRequest.agegroup;
+}
+
+function onTeamsRetrieve(error, result, response) {
     if (error) {
-      logger.error(FILE_ID, `Error while retrieving categories: ${error}`);
+      logger.error(FILE_ID, `Error while retrieving teams: ${error}`);
       responder.rejectBadGateway(response);
       return;
     };
     responder.send(response, {
         status: CONFIG.CONSTANTS.HTTP_CODE.OK,
         data: {
-            categories: result
+            teams: result
         }
     });
 }
 
-function retrieveCategories(request, response) {
-    dbFind('categories', null, (error, result) => {
-        onCategoriesRetrieve(error, result, response);
+function retrieveTeams(request, response) {
+    dbFind('teams', null, (error, result) => {
+        onTeamsRetrieve(error, result, response);
     });
 }
 
-function addCategory(request, response) {
-    const categoryDataFromRequest = Object.assign({}, request.body, {
+function addTeam(request, response) {
+    const teamDataFromRequest = Object.assign({}, request.body, {
         _id: helpers.generateRandomId()
     });
 
-    dbFind('categories', null, (error, result) => {
+    dbFind('teams', null, (error, result) => {
         if (error) {
-            logger.error(FILE_ID, `Error while retrieving categories: ${error}`);
+            logger.error(FILE_ID, `Error while retrieving teams: ${error}`);
             responder.rejectBadGateway(response);
             return;
         };
 
         const dataFromRequest = Object.assign({}, request.body);
-        const category = result.find(item => {
-            return item.symbol === dataFromRequest.symbol;
+        const team = result.find(item => {
+            return hasConflictConditions(item, dataFromRequest);
         });
 
-        if (category) {
+        if (team) {
             responder.rejectConflict(response);
             return;
         }
 
-        dbInsert('categories',
-            categoryDataFromRequest,
+        dbInsert('teams',
+            teamDataFromRequest,
             (status) => {
                 if (status === 200) {
-                    retrieveCategories(request, response);
+                    retrieveTeams(request, response);
                 } else {
                     responder.send(response, {
                         status
@@ -68,15 +72,15 @@ function addCategory(request, response) {
 
 }
 
-function removeCategory(request, response) {
-    dbDelete('categories',
+function removeTeam(request, response) {
+    dbDelete('teams',
         {
             _id: request.params.id
         },
         (promise) => {
             promise
                 .then(() => {
-                    retrieveCategories(request, response);
+                    retrieveTeams(request, response);
                 })
                 .catch(error => {
                     responder.send(response, {
@@ -88,31 +92,31 @@ function removeCategory(request, response) {
     );
 }
 
-function updateCategory(request, response) {
-    dbFind('categories', null, (error, result) => {
+function updateTeam(request, response) {
+    dbFind('teams', null, (error, result) => {
         if (error) {
-            logger.error(FILE_ID, `Error while retrieving categories: ${error}`);
+            logger.error(FILE_ID, `Error while retrieving teams: ${error}`);
             responder.rejectBadGateway(response);
             return;
         };
 
         const updateFromRequest = Object.assign({}, request.body);
-        const category = result.find(item => {
+        const team = result.find(item => {
             return item._id === updateFromRequest._id;
         });
 
-        if (!category) {
+        if (!team) {
             responder.rejectNotFound(response);
             return;
         }
 
-        const dataToSave = Object.assign({}, category, updateFromRequest);
+        const dataToSave = Object.assign({}, team, updateFromRequest);
 
-        dbSave('categories',
+        dbSave('teams',
           dataToSave,
           (status) => {
               if (status === 200) {
-                retrieveCategories(request, response);
+                retrieveTeams(request, response);
               } else {
                 responder.send(response, {
                     status
@@ -172,10 +176,10 @@ function checkIfTokenValid(request, response, onTokenValidCallback) {
         });
 }
 
-module.exports = new class CategoriesResource {
+module.exports = new class TeamsResource {
 
     get(request, response) {
-        checkIfTokenValid(request, response, retrieveCategories);
+        checkIfTokenValid(request, response, retrieveTeams);
     }
 
     post(request, response) {
@@ -184,7 +188,7 @@ module.exports = new class CategoriesResource {
             return;
         }
 
-        checkIfTokenValid(request, response, updateCategory);
+        checkIfTokenValid(request, response, updateTeam);
     }
 
     put(request, response) {
@@ -193,7 +197,7 @@ module.exports = new class CategoriesResource {
             return;
         }
 
-        checkIfTokenValid(request, response, addCategory);
+        checkIfTokenValid(request, response, addTeam);
     }
 
     delete(request, response) {
@@ -202,6 +206,6 @@ module.exports = new class CategoriesResource {
             return;
         }
 
-        checkIfTokenValid(request, response, removeCategory);
+        checkIfTokenValid(request, response, removeTeam);
     }
 };
