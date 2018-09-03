@@ -4,6 +4,7 @@ const responder = require('./common/responder'),
     endpoints = [
         'accounts',
         'agegroups',
+        'gameresults',
         'healthcheck',
         'leagues',
         'login',
