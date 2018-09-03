@@ -8,6 +8,7 @@ const responder = require('./common/responder'),
         'leagues',
         'login',
         'logout',
+        'opponents',
         'register',
         'teams',
         'teams-public'
