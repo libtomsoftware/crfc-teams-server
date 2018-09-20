@@ -1,14 +1,14 @@
 {
-  "name": "footy-assistant-server",
+  "name": "crfc-teams-server",
   "version": "0.0.1",
-  "description": "Footy Assistant Server",
+  "description": "CRFC Teams app server",
   "main": "index.js",
   "scripts": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/libtomsoftware/footy-assistant-app.git"
+    "url": "git+https://github.com/libtomsoftware/crfc-teams-server.git"
   },
   "keywords": [
     "football",
@@ -18,9 +18,9 @@
   "author": "Libtom Software Ltd",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/libtomsoftware/footy-assistant-app/issues"
+    "url": "https://github.com/libtomsoftware/crfc-teams-server/issues"
   },
-  "homepage": "https://github.com/libtomsoftware/footy-assistant-app#readme",
+  "homepage": "https://github.com/libtomsoftware/crfc-teams-server#readme",
   "dependencies": {
     "body-parser": "*",
     "chalk": "*",
