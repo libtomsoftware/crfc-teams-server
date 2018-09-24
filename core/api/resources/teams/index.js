@@ -179,7 +179,7 @@ function checkIfTokenValid(request, response, onTokenValidCallback) {
 module.exports = new class TeamsResource {
 
     get(request, response) {
-        checkIfTokenValid(request, response, retrieveTeams);
+        retrieveTeams(request, response);
     }
 
     post(request, response) {
