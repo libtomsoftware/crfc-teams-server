@@ -14,7 +14,7 @@ const responder = require('./common/responder'),
         'players',
         'register',
         'teams',
-        'teams-public'
+        'teamspublic'
     ],
     FILE_ID = 'api';
 

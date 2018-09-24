@@ -3,6 +3,7 @@ module.exports = function (request, response, next) {
     const allowedOrigins = [
         'http://127.0.0.1:3000',
         'http://localhost:3000',
+        'http://localhost:3001',
         'http://crfcapp.libtom.com',
         'https://crfcapp.libtom.com',
         'http://cassioburyrangersfc.co.uk',
