@@ -13,7 +13,8 @@ const responder = require('./common/responder'),
         'opponents',
         'players',
         'register',
-        'teams'
+        'teams',
+        'crfcteams'
     ],
     FILE_ID = 'api';
 
