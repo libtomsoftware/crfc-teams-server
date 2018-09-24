@@ -2,14 +2,20 @@ const FILE_ID = 'api/resources/logout';
 const logger = require('../../../logger');
 const responder = require('../../common/responder');
 const dbFind = require('../../../db/operations/find');
+const dbInsert = require('../../../db/operations/insert');
+const dbSave = require('../../../db/operations/save');
+const dbDelete = require('../../../db/operations/delete');
 const CONFIG = require('../../../config');
+const helpers = require('../../../helpers');
 
 function getAgeGroup(value, agegroups) {
     if (!agegroups || !!!agegroups.length) {
         return '';
     }
 
-    return agegroups.find(group => group._id === value).abbreviation;
+    const agegroup = agegroups.find(group => group._id === value);
+
+    return agegroup ? agegroup.abbreviation : '';
 }
 
 function getLeague(value, leagues) {
@@ -17,7 +23,9 @@ function getLeague(value, leagues) {
         return '';
     }
 
-    return leagues.find(group => group._id === value).abbreviation;
+    const league = leagues.find(group => group._id === value);
+
+    return league ? league.abbreviation : '';
 }
 
 function getManagers(values, accounts) {
@@ -94,6 +102,7 @@ function onTeamsRetrieve(error, teams, response) {
                         teams: dataToReturn
                     }
                 });
+
             });
         });
     });
